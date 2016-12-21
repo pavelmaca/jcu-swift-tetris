@@ -15,6 +15,17 @@
 		6582854BC98D9E118970A03B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6582823CE6BE67863E258257 /* Assets.xcassets */; };
 		658285B088305B525EB929B3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65828A1D9CA53F4812494A1A /* GameScene.sks */; };
 		658288930B819F4B36776E49 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65828D6B1DD77FB9D6F1BE7B /* GameViewController.swift */; };
+		E96E6B361E0A84F4009F063F /* board in Resources */ = {isa = PBXBuildFile; fileRef = E96E6B2F1E0A84F4009F063F /* board */; };
+		E96E6B371E0A84F4009F063F /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B301E0A84F4009F063F /* Difficulty.swift */; };
+		E96E6B381E0A84F4009F063F /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B311E0A84F4009F063F /* Engine.swift */; };
+		E96E6B391E0A84F4009F063F /* events in Resources */ = {isa = PBXBuildFile; fileRef = E96E6B321E0A84F4009F063F /* events */; };
+		E96E6B3A1E0A84F4009F063F /* FieldStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B331E0A84F4009F063F /* FieldStorage.swift */; };
+		E96E6B3C1E0A84F4009F063F /* ShapeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B351E0A84F4009F063F /* ShapeGenerator.swift */; };
+		E96E6B3E1E0A8518009F063F /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B3D1E0A8518009F063F /* Shape.swift */; };
+		E96E6B421E0A8539009F063F /* Gui.java in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B401E0A8539009F063F /* Gui.java */; };
+		E96E6B431E0A8539009F063F /* panels in Resources */ = {isa = PBXBuildFile; fileRef = E96E6B411E0A8539009F063F /* panels */; };
+		E96E6B451E0A8A56009F063F /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B441E0A8A56009F063F /* ShapeType.swift */; };
+		E96E6B471E0ABCE3009F063F /* ShapeDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B461E0ABCE3009F063F /* ShapeDefinition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +39,17 @@
 		65828D6B1DD77FB9D6F1BE7B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		65828E04304E9CA1E3953823 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65828FB2F2CF1277FF3BB271 /* Tetris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E96E6B2F1E0A84F4009F063F /* board */ = {isa = PBXFileReference; lastKnownFileType = folder; name = board; path = engine/board; sourceTree = "<group>"; };
+		E96E6B301E0A84F4009F063F /* Difficulty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Difficulty.swift; path = engine/Difficulty.swift; sourceTree = "<group>"; };
+		E96E6B311E0A84F4009F063F /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Engine.swift; path = engine/Engine.swift; sourceTree = "<group>"; };
+		E96E6B321E0A84F4009F063F /* events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = events; path = engine/events; sourceTree = "<group>"; };
+		E96E6B331E0A84F4009F063F /* FieldStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldStorage.swift; path = engine/FieldStorage.swift; sourceTree = "<group>"; };
+		E96E6B351E0A84F4009F063F /* ShapeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeGenerator.swift; path = engine/ShapeGenerator.swift; sourceTree = "<group>"; };
+		E96E6B3D1E0A8518009F063F /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Shape.swift; path = "../../../../Downloads/jcu-java-tetris-master 2/src/tetris/engine/Shape.swift"; sourceTree = "<group>"; };
+		E96E6B401E0A8539009F063F /* Gui.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = Gui.java; path = gui/Gui.java; sourceTree = "<group>"; };
+		E96E6B411E0A8539009F063F /* panels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = panels; path = gui/panels; sourceTree = "<group>"; };
+		E96E6B441E0A8A56009F063F /* ShapeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
+		E96E6B461E0ABCE3009F063F /* ShapeDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeDefinition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +66,8 @@
 		658281DFD0B14A866CF96BFE /* Tetris */ = {
 			isa = PBXGroup;
 			children = (
+				E96E6B3F1E0A8520009F063F /* gui */,
+				E96E6B2C1E0A84AB009F063F /* engine */,
 				658280653FA1B0BBFF137DD5 /* Info.plist */,
 				6582823CE6BE67863E258257 /* Assets.xcassets */,
 				65828687180A28DC00422AE8 /* LaunchScreen.storyboard */,
@@ -71,6 +95,31 @@
 				65828FB2F2CF1277FF3BB271 /* Tetris.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E96E6B2C1E0A84AB009F063F /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				E96E6B3D1E0A8518009F063F /* Shape.swift */,
+				E96E6B2F1E0A84F4009F063F /* board */,
+				E96E6B301E0A84F4009F063F /* Difficulty.swift */,
+				E96E6B311E0A84F4009F063F /* Engine.swift */,
+				E96E6B321E0A84F4009F063F /* events */,
+				E96E6B331E0A84F4009F063F /* FieldStorage.swift */,
+				E96E6B351E0A84F4009F063F /* ShapeGenerator.swift */,
+				E96E6B441E0A8A56009F063F /* ShapeType.swift */,
+				E96E6B461E0ABCE3009F063F /* ShapeDefinition.swift */,
+			);
+			name = engine;
+			sourceTree = "<group>";
+		};
+		E96E6B3F1E0A8520009F063F /* gui */ = {
+			isa = PBXGroup;
+			children = (
+				E96E6B401E0A8539009F063F /* Gui.java */,
+				E96E6B411E0A8539009F063F /* panels */,
+			);
+			name = gui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,9 +174,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6582854BC98D9E118970A03B /* Assets.xcassets in Resources */,
+				E96E6B431E0A8539009F063F /* panels in Resources */,
 				6582812852F23E987DF623E9 /* LaunchScreen.storyboard in Resources */,
 				65828470396CFF17D90ECBD6 /* Main.storyboard in Resources */,
+				E96E6B361E0A84F4009F063F /* board in Resources */,
 				658285B088305B525EB929B3 /* GameScene.sks in Resources */,
+				E96E6B391E0A84F4009F063F /* events in Resources */,
 				6582816BE9F329525FFEAB94 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,9 +191,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E96E6B3C1E0A84F4009F063F /* ShapeGenerator.swift in Sources */,
 				65828216C738D354CC53FEA4 /* AppDelegate.swift in Sources */,
+				E96E6B421E0A8539009F063F /* Gui.java in Sources */,
 				6582806EBBA852FD57143B67 /* GameScene.swift in Sources */,
+				E96E6B471E0ABCE3009F063F /* ShapeDefinition.swift in Sources */,
+				E96E6B3E1E0A8518009F063F /* Shape.swift in Sources */,
 				658288930B819F4B36776E49 /* GameViewController.swift in Sources */,
+				E96E6B381E0A84F4009F063F /* Engine.swift in Sources */,
+				E96E6B451E0A8A56009F063F /* ShapeType.swift in Sources */,
+				E96E6B371E0A84F4009F063F /* Difficulty.swift in Sources */,
+				E96E6B3A1E0A84F4009F063F /* FieldStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
