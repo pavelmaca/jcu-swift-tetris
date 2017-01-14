@@ -17,8 +17,12 @@ class GameScene: SKScene {
     private var spinnyNode : SKShapeNode?*/
 
     private var timer: Int = 0
+    private let FPS = 60
+    private var sceneWidth : Int = 0
 
     private var shapes: [[SKShapeNode]]?
+    
+    private let engine:Engine = Engine(rowsCount: 20,colsCount: 10)
 
     override init(size: CGSize){
         super.init(size: size)
@@ -26,39 +30,63 @@ class GameScene: SKScene {
     }
 
     required init?(coder aDecoder: NSCoder) {
-       super.init(coder: aDecoder)
+        super.init(coder: aDecoder)
         startup()
     }
 
     func startup(){
+        scene?.anchorPoint = CGPoint.zero
+        
+        sceneWidth = Int(self.scene!.frame.width)
+        engine.setDifficulty(difficulty: .MEDIUM)
+        engine.start()
        // let shape = SKShapeNode.init(rectOf: CGSize.init(width:20, height: 20), cornerRadius: 1)
 
-           }
+    }
     
     override func update(_ currentTime: TimeInterval) {
         timer += 1
-        if timer > 60 {
+        if timer >= DifficultyList.list[engine.getDifficulty()]!.getFallSpeed() * FPS / 1000 {
+            engine.tick()
+            timer = 0
             makeMove()
         }
+        /*if timer > 60 {
+            makeMove()
+        }*/
         // Called before each frame is rendered
     }
     
     func makeMove(){
         self.removeAllChildren()
-        renderSquers(start: timer * 5)
+        renderSquers()
         
     }
     
-    func renderSquers(start: Int){
-        for y in 1...5 {
-            for i in 1...5{
-                let shape = SKShapeNode.init(rect: CGRect(x: 100+i*20, y: start+50+y*20,  width:20, height: 20), cornerRadius: 1)
-                shape.fillColor = (i%2==0 ? .blue : .red)
+    func renderSquers(){
+        let fields:[[UIColor?]] = engine.getStatus()
+        let squereSize:Int = sceneWidth / engine.getColsCount()
+        
+
+        let xStart:Int = (Int(scene!.frame.width))/2 - 45
+        let yStart:Int = (Int(scene!.frame.height)) / 2 - 45
+        
+        for x in 0...engine.getColsCount()-1{
+            for y in 0...engine.getRowsCount()-1{
+                var color = fields[y][x]
                 
-                shapes?[i][y] = shape
+                if color == nil {
+                    //x += 1
+                    //continue
+                    color = UIColor.white
+                }
+   
+                let shape = SKShapeNode.init(rect: CGRect(x: xStart-x*squereSize, y: yStart - y*squereSize,  width:squereSize, height: squereSize), cornerRadius: 1)
+                shape.fillColor = color!
+                
+                shapes?[y][x] = shape
                 self.addChild(shape)
             }
-            
         }
 
     }

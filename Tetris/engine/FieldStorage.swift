@@ -24,7 +24,7 @@ class FieldStorage {
      * @param colsCount počet sloupců
      */
     init(rowsCount:Int, colsCount:Int) {
-        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: colsCount), count: rowsCount)        
+        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: rowsCount), count: colsCount)
     }
 
     /**
@@ -45,7 +45,7 @@ class FieldStorage {
      * Vyresetuje aktuální stav na prázdnou plochu
      */
     public func resetStorage()->Void{
-        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: getColsCount()), count: getRowsCount())
+        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: getRowsCount()), count: getColsCount())
     }
 
     /**
@@ -57,7 +57,7 @@ class FieldStorage {
      * @param yPosition pozice ukládaného tvaru na ose YY
      */
     public func saveShape(shape:Shape, xPosition:Int, yPosition:Int) {
-        margeShapeIntoFields(fields: &fileds, Shape: shape, xPosition: xPosition, yPosition: yPosition)
+        fileds = margeShapeIntoFields(fields: &fileds, Shape: shape, xPosition: xPosition, yPosition: yPosition)
     }
 
     /**
@@ -76,9 +76,12 @@ class FieldStorage {
 
         var n:Int = rowsCount - 1; // aktuální řádek, kam ukládá v novém poli
 
-        for y in n...0 {
+        var y:Int = n
+        while y >= 0 {
+        //for y in stride(from: n, to: 0, by: -1) {
+            
             var fullRow:Bool = true;
-            for x in 0...colsCount-1 {
+            for x in 0 ..< colsCount {
                 if fileds[y][x] == nil {
                     fullRow = false
                     break
@@ -90,6 +93,8 @@ class FieldStorage {
             } else {
                 count += 1
             }
+            
+            y -= 1
         }
 
         fileds = cleanedFilds;
@@ -143,7 +148,7 @@ class FieldStorage {
      * @param yPosition pozice na ose Y pro tvar
      * @return vstupní pole modifikované o přidaný tvar
      */
-    private func margeShapeIntoFields(fields:inout [[UIColor?]], Shape shape:Shape, xPosition:Int, yPosition:Int)->[[UIColor?]]{
+    private func margeShapeIntoFields(fields:inout[[UIColor?]], Shape shape:Shape, xPosition:Int, yPosition:Int)->[[UIColor?]]{
 
         var points:[[Bool]] = shape.getPoints();
 
@@ -185,15 +190,13 @@ class FieldStorage {
      */
     private func deepCopyOfFileds(fieldsToCopy:[[UIColor?]])->[[UIColor?]]? {
         return fieldsToCopy
-        /*
-        if fieldsToCopy.count == 0 {
+    /*    if fieldsToCopy.count == 0 {
             return nil
         }
         
-    */
-       /* var result:[[UIColor?]] = [UIColor?](repeating: [UIColor?](repeating: nil, count: fieldsToCopy[0].count), count: fieldsToCopy.count)
-        for r in 0...fieldsToCopy.count {
-            result[r] = fieldsToCopy[r].copy()
+        var result = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: fieldsToCopy.count), count: fieldsToCopy[0].count)
+        for r in 0...fieldsToCopy.count - 1 {
+            result[r] =  fieldsToCopy[r].map{$0}
         }
         
       return result;*/

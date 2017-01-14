@@ -9,7 +9,7 @@ class ShapeGenerator {
     
     /** Vygenerování náhodného čísla */
     private func getRandomInt(upperLimit:Int)->Int {
-        return Int(arc4random_uniform(UInt32(upperLimit))+1)
+        return Int(arc4random_uniform(UInt32(upperLimit)))
     }
 
     /**
