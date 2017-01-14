@@ -24,7 +24,7 @@ class FieldStorage {
      * @param colsCount počet sloupců
      */
     init(rowsCount:Int, colsCount:Int) {
-        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: rowsCount), count: colsCount)
+        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: colsCount), count: rowsCount)
     }
 
     /**
@@ -45,7 +45,7 @@ class FieldStorage {
      * Vyresetuje aktuální stav na prázdnou plochu
      */
     public func resetStorage()->Void{
-        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: getRowsCount()), count: getColsCount())
+        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: getColsCount()), count: getRowsCount())
     }
 
     /**

@@ -13,8 +13,9 @@ import Foundation
 
 class GameScene: SKScene {
 
-    /*private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?*/
+    private var label : SKLabelNode?
+  //  private var spinnyNode : SKShapeNode?
+    
 
     private var timer: Int = 0
     private let FPS = 60
@@ -22,8 +23,11 @@ class GameScene: SKScene {
 
     private var shapes: [[SKShapeNode]]?
     
-    private let engine:Engine = Engine(rowsCount: 20,colsCount: 10)
+    private var engine:Engine?
+    
+    
 
+    
     override init(size: CGSize){
         super.init(size: size)
         startup()
@@ -31,23 +35,41 @@ class GameScene: SKScene {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        label?.isHidden = true
+        
         startup()
+    }
+    
+    func swipedLeft(sender:UIGestureRecognizer){
+        if sender.state == UIGestureRecognizerState.ended {
+            engine?.moveLeft()
+        }
+        
     }
 
     func startup(){
-        scene?.anchorPoint = CGPoint.zero
+        self.backgroundColor = .black
+
+        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft))
+        swipeLeft.direction = .left
+        self.view?.addGestureRecognizer(swipeLeft)
         
-        sceneWidth = Int(self.scene!.frame.width)
-        engine.setDifficulty(difficulty: .MEDIUM)
-        engine.start()
+        
+        let size = Int(self.size.width.divided(by: 10))
+        let rows = Int(self.size.height.divided(by: CGFloat(size)))
+        
+        engine = Engine(rowsCount: rows , colsCount: 10)
+            
+        engine!.setDifficulty(difficulty: .MEDIUM)
+        engine!.start()
        // let shape = SKShapeNode.init(rectOf: CGSize.init(width:20, height: 20), cornerRadius: 1)
 
     }
     
     override func update(_ currentTime: TimeInterval) {
         timer += 1
-        if timer >= DifficultyList.list[engine.getDifficulty()]!.getFallSpeed() * FPS / 1000 {
-            engine.tick()
+        if timer >= DifficultyList.list[engine!.getDifficulty()]!.getFallSpeed() * FPS / 1000 {
+            engine!.tick()
             timer = 0
             makeMove()
         }
@@ -64,15 +86,15 @@ class GameScene: SKScene {
     }
     
     func renderSquers(){
-        let fields:[[UIColor?]] = engine.getStatus()
-        let squereSize:Int = sceneWidth / engine.getColsCount()
+        let fields:[[UIColor?]] = engine!.getStatus()
+        let squereSize:Int = Int(self.size.width.divided(by: CGFloat(engine!.getColsCount())))
         
 
-        let xStart:Int = (Int(scene!.frame.width))/2 - 45
-        let yStart:Int = (Int(scene!.frame.height)) / 2 - 45
+       // let xStart:Int = 0
+        let yStart:Int = Int(self.size.height)
         
-        for x in 0...engine.getColsCount()-1{
-            for y in 0...engine.getRowsCount()-1{
+        for x in 0...engine!.getColsCount()-1{
+            for y in 0...engine!.getRowsCount()-1{
                 var color = fields[y][x]
                 
                 if color == nil {
@@ -81,8 +103,12 @@ class GameScene: SKScene {
                     color = UIColor.white
                 }
    
-                let shape = SKShapeNode.init(rect: CGRect(x: xStart-x*squereSize, y: yStart - y*squereSize,  width:squereSize, height: squereSize), cornerRadius: 1)
+             //   let shape = SKShapeNode.init(rect: CGRect(x: xStart-x*squereSize, y: yStart - y*squereSize,  width:squereSize, height: squereSize), cornerRadius: 1)
+                let shape = SKShapeNode.init(rect: CGRect(x: 0, y: 0, width: squereSize, height: squereSize))
                 shape.fillColor = color!
+                
+                // shape has position on bottom left corner
+                shape.position = CGPoint(x: x * squereSize, y: yStart - y * squereSize - squereSize)
                 
                 shapes?[y][x] = shape
                 self.addChild(shape)
