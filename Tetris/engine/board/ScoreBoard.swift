@@ -1,16 +1,11 @@
-package tetris.engine.board;
-
-import java.io.*;
-import java.util.Iterator;
-import java.util.TreeSet;
-
 /**
  * Žebříček všech odehraných her seřazený podle skóre
  * Data je možné uložit do souboru a znovu načíst.
  *
  * @author Pavel Máca <maca.pavel@gmail.com>
  */
-public class ScoreBoard {
+/*
+ public class ScoreBoard {
 
     /**
      * datový soubor pro uožení žebříčku
@@ -110,3 +105,4 @@ public class ScoreBoard {
 
 
 }
+*/

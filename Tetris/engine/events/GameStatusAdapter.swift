@@ -1,5 +1,3 @@
-package tetris.engine.events;
-
 /**
  * Výchozí implementace rozhraní {@link GameStatusListener}
  * Při vyvolání událostí není provedena žádná akce.
@@ -7,26 +5,23 @@ package tetris.engine.events;
  * @author Pavel Máca <maca.pavel@gmail.com>
  * @see GameStatusListener
  */
-public abstract class GameStatusAdapter implements GameStatusListener {
+public class GameStatusAdapter : GameStatusListener {
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void scoreChange(int score) {
+    public func scoreChange(score:Int) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void gameEnd() {
+    public func gameEnd() {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void shapeChange() {
+    public func shapeChange() {
     }
 }

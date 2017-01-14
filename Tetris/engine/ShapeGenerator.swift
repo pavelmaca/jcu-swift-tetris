@@ -52,7 +52,10 @@ class ShapeGenerator {
                 shape.rotate();
             case 2:
                 shape.rotate();
-                break;
+                break
+            default:
+                return
+            
         }
     }
 
@@ -66,6 +69,8 @@ class ShapeGenerator {
             case 0:
                 shape.flip();
                 break;
+            default:
+                return
         }
     }
 

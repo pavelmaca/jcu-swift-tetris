@@ -7,7 +7,7 @@
 //
 import UIKit
 
-public class ShapeDefinition {
+class ShapeDefinition {
     public static func getDifinition(type: ShapeType) ->Shape{
         switch type {
         case .LINE: return Shape(points: [

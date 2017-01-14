@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /**
  * Logická implementace aplikace.
@@ -12,16 +13,16 @@ class Engine {
     private var storage:FieldStorage
 
     /* Další tvar v pořadí */
-    private var nextShape:Shape
+    private var nextShape:Shape?
 
     /* Aktuální pohyblivý tvar na kterém se provádějí akce */
-    private var actualShape:Shape
+    private var actualShape:Shape?
 
     /* Pozice aktuálního tvaru na ose X */
-    private var actualX :Int
+    private var actualX :Int = 0
 
     /* Pozice aktuálního tvaru na ose Y */
-    private var actualY:Int
+    private var actualY:Int = 0
 
     /* Stav určujicí zda hra běží */
     private var running:Bool = false
@@ -34,9 +35,10 @@ class Engine {
 
     /* Pole listenerů reagující na změnu stavu hry */
    // private ArrayList<GameStatusListener> gameStatusListeners = new ArrayList<>();
+    private var gameStatusListeners:[GameStatusListener] = [GameStatusListener]()
 
     /* Generátor náhodných tvarů */
-    private var generator:ShapeGenerator = ShapeGenerator();
+    private var generator:ShapeGenerator = ShapeGenerator()
 
     /**
      * Inicializace hry
@@ -44,11 +46,11 @@ class Engine {
      * @param rowsCount počet řádků herního pole
      * @param colsCount počet soupců herního pole
      */
-    public init(rowsCount:int, colsCount:int) {
-        storage = FieldStorage(rowsCount, colsCount);
+    public init(rowsCount:Int, colsCount:Int) {
+        storage = FieldStorage(rowsCount: rowsCount, colsCount: colsCount)
 
-        nextShape = generator.createNext();
-        creteNewShape();
+        nextShape = generator.createNext()
+        creteNewShape()
     }
 
 
@@ -56,13 +58,15 @@ class Engine {
      * Změní stav předchozího tvaru na aktuální a vytvoří nový následujicí.
      * Předchozí tvar má výchozí souřadnice na horním okraji uprostřed herní plochy.
      */
-    private func creteNewShape()->void {
+    private func creteNewShape() {
         actualShape = nextShape;
-        actualX = storage.getColsCount() / 2 - actualShape.getWidth() / 2;
+        actualX = storage.getColsCount() / 2 - actualShape!.getWidth() / 2;
         actualY = 0;
 
         nextShape = generator.createNext();
-        gameStatusListeners.forEach(listener -> listener.shapeChange());
+        for listener in gameStatusListeners{
+            listener.shapeChange()
+        }
     }
 
     /**
@@ -75,17 +79,17 @@ class Engine {
      * Při odmazání řádku je vyvolán event typu {@link GameStatusListener.scoreChange()}.
      * Konec hry vyvolá událost typu {@link GameStatusListener.gameEnd()}.
      */
-    public void tick() {
+    public func tick() {
         if running && !moveDown() {
-            storage.saveShape(actualShape, actualX, actualY);
+            storage.saveShape(shape: actualShape!, xPosition: actualX, yPosition: actualY);
             let removedCount:Int = storage.removeFullRows();
             if (removedCount > 0) {
-                score += removedCount * storage.getColsCount() * difficulty.getScoreCoeficient();
+                score += removedCount * storage.getColsCount() * (DifficultyList.list[difficulty]?.getScoreCoeficient())!;
                 performScoreChangeEvent();
             }
 
             creteNewShape();
-            if (storage.isCollision(actualShape, actualX, actualY)) {
+            if (storage.isCollision(shape: actualShape!, xPosition: actualX, yPosition: actualY)) {
                 running = false;
                 performGameEndEvent();
             }
@@ -97,8 +101,8 @@ class Engine {
      *
      * @return dvojrozměrné pole barev, představující aktuální stav hry.
      */
-    public func getStatus()->[[Color]] {
-        return storage.printStatus(actualShape, actualX, actualY);
+    public func getStatus()->[[UIColor?]] {
+        return storage.printStatus(shape: actualShape, xPosition: actualX, yPosition: actualY);
     }
 
     /**
@@ -109,7 +113,7 @@ class Engine {
      * @return true, pokud je možné aktuální tvar posunout na dané souřadnice
      */
     private func tryMove(nextX:Int, nextY:Int)->Bool {
-        return running && !storage.isCollision(actualShape, nextX, nextY);
+        return running && !storage.isCollision(shape: actualShape!, xPosition: nextX, yPosition: nextY);
     }
 
     /*
@@ -117,7 +121,7 @@ class Engine {
      */
     public func moveLeft() {
         let nextX:Int = actualX - 1;
-        if tryMove(nextX, actualY) {
+        if tryMove(nextX: nextX, nextY: actualY) {
             actualX = nextX;
         }
     }
@@ -127,7 +131,7 @@ class Engine {
      */
     public func moveRight() {
         let nextX:Int = actualX + 1
-        if tryMove(nextX, actualY) {
+        if tryMove(nextX: nextX, nextY: actualY) {
             actualX = nextX;
         }
     }
@@ -139,7 +143,7 @@ class Engine {
      */
     public func moveDown()->Bool {
         let nextY:Int = actualY + 1
-        if tryMove(actualX, nextY) {
+        if tryMove(nextX: actualX, nextY: nextY) {
             actualY = nextY
             return true;
         }
@@ -158,29 +162,29 @@ class Engine {
             return;
         }
 
-        let prevWidth:Int = actualShape.getWidth()
-        let newX:Int = actualX
+        let prevWidth:Int = actualShape!.getWidth()
+        var newX:Int = actualX
 
-        actualShape.rotate()
+        actualShape!.rotate()
 
 
-        if (prevWidth != actualShape.getWidth()) {
-            newX += (prevWidth - actualShape.getWidth()) / 2
+        if (prevWidth != actualShape!.getWidth()) {
+            newX += (prevWidth - actualShape!.getWidth()) / 2
         }
 
         // vycentrování - oprava pozice na x, po otočení na straně herní plochy
         if newX < 0 {
             newX = 0
-        } else if (newX + actualShape.getWidth() > storage.getColsCount()) {
-            newX = storage.getColsCount() - actualShape.getWidth()
+        } else if (newX + actualShape!.getWidth() > storage.getColsCount()) {
+            newX = storage.getColsCount() - actualShape!.getWidth()
         }
 
         // kontrola kolize po otočení a vycentrování
-        if storage.isCollision(actualShape, newX, actualY) {
+        if storage.isCollision(shape: actualShape!, xPosition: newX, yPosition: actualY) {
             // rotace zpět do původní polohy
-            actualShape.rotate()
-            actualShape.rotate()
-            actualShape.rotate()
+            actualShape?.rotate()
+            actualShape?.rotate()
+            actualShape?.rotate()
         } else {
             actualX = newX
         }
@@ -204,14 +208,14 @@ class Engine {
      * Nastaví stav hry na "běží"
      */
     public func start() {
-        this.running = true;
+        running = true;
     }
 
     /**
      * Nastaví stav hry na "pozastaveno"
      */
     public func pause() {
-        this.running = false;
+        running = false;
     }
 
     /**
@@ -219,29 +223,33 @@ class Engine {
      *
      * @param listener Listener implemetující rozhrani {@link GameStatusListener}
      */
-    public func addGameStatusListener(GameStatusListener listener) {
-        gameStatusListeners.add(listener);
+    public func addGameStatusListener(listener:GameStatusListener ) {
+        gameStatusListeners.append(listener)
     }
 
     /**
      * Provedení všech akcí vazaných na změnu skóre v registrovaných listenerech
      */
     private func performScoreChangeEvent() {
-        gameStatusListeners.forEach(listener -> listener.scoreChange(score));
+        for listener in gameStatusListeners {
+            listener.scoreChange(score: score)
+        }
     }
 
     /**
      * Provedení všech akcí vazaných na konec hry v registrovaných listenerech
      */
     private func performGameEndEvent() {
-        gameStatusListeners.forEach(listener -> listener.gameEnd());
+        for listener in gameStatusListeners {
+            listener.gameEnd()
+        }
     }
 
     /**
      * @return Tvar, který bude následovat po katuálním
      */
     public func getNextShape()->Shape {
-        return nextShape;
+        return nextShape!;
     }
 
     /**

@@ -10,7 +10,7 @@
  * Seznam dostupných typů tvarů a jejich předpisy.
  * Každý typ má pevně nastavenou barvu a je definován dvourozměrným polem "bodů".
  */
-public enum ShapeType {
+enum ShapeType {
     case LINE
     case CORNER
     case T

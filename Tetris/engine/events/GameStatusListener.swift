@@ -1,26 +1,24 @@
-package tetris.engine.events;
-
 /**
  * Rozhraní popisujíco dostupné herní události
  *
  * @author Pavel Máca <maca.pavel@gmail.com>
  */
-public interface GameStatusListener {
+public protocol GameStatusListener {
 
     /**
      * Událost reprezentující změnu skóre
      *
      * @param score aktuální skóre
      */
-    void scoreChange(int score);
+    func scoreChange(score:Int);
 
     /**
      * Událost reprezentující konec hry
      */
-    void gameEnd();
+    func gameEnd();
 
     /**
      * Událost reprezentující změnu aktuálního tvaru
      */
-    void shapeChange();
+    func shapeChange();
 }

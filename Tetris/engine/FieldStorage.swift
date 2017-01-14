@@ -15,7 +15,7 @@ class FieldStorage {
     /**
      * Uchovává aktuální polohu a tvar nepohyblivých objektů
      */
-    private let fileds: [[UIColor?]] = [];
+    private var fileds: [[UIColor?]]
 
     /**
      * Vytvoří nové uložiště s danou velikostí
@@ -24,28 +24,28 @@ class FieldStorage {
      * @param colsCount počet sloupců
      */
     init(rowsCount:Int, colsCount:Int) {
-        fileds = [[UIColor]](repeating: [UIColor](repeating: nil, count: colsCount), count: rowsCount)
+        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: colsCount), count: rowsCount)        
     }
 
     /**
      * @return počet řádků
      */
     public func getRowsCount()->Int {
-        return fileds.count;
+        return fileds.count
     }
 
     /**
      * @return počet sloupců
      */
     public func getColsCount()->Int {
-        return fileds.count > 0 ? fileds[0].count : 0;
+        return fileds.count > 0 ? fileds[0].count : 0
     }
 
     /**
      * Vyresetuje aktuální stav na prázdnou plochu
      */
     public func resetStorage()->Void{
-        fileds = UIColor[getRowsCount()][getColsCount()];
+        fileds = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: getColsCount()), count: getRowsCount())
     }
 
     /**
@@ -57,7 +57,7 @@ class FieldStorage {
      * @param yPosition pozice ukládaného tvaru na ose YY
      */
     public func saveShape(shape:Shape, xPosition:Int, yPosition:Int) {
-        margeShapeIntoFields(fields: fileds, Shape: shape, xPosition: xPosition, yPosition: yPosition)
+        margeShapeIntoFields(fields: &fileds, Shape: shape, xPosition: xPosition, yPosition: yPosition)
     }
 
     /**
@@ -72,7 +72,7 @@ class FieldStorage {
         let rowsCount:Int = getRowsCount()
         let colsCount:Int = getColsCount()
 
-        let cleanedFilds:[[UIColor]] = [UIColor](repeating: [UIColor], count: colsCount) // nové pole bez odebraných řádků
+        var cleanedFilds:[[UIColor?]] = [[UIColor?]](repeating: [UIColor?](repeating: nil, count: colsCount), count: rowsCount) // nové pole bez odebraných řádků
 
         var n:Int = rowsCount - 1; // aktuální řádek, kam ukládá v novém poli
 
@@ -85,7 +85,8 @@ class FieldStorage {
                 }
             }
             if (!fullRow) {
-                cleanedFilds[n--] = fileds[y]
+                cleanedFilds[n] = fileds[y]
+                n -= 1
             } else {
                 count += 1
             }
@@ -142,7 +143,7 @@ class FieldStorage {
      * @param yPosition pozice na ose Y pro tvar
      * @return vstupní pole modifikované o přidaný tvar
      */
-    private func margeShapeIntoFields(fields:[[UIColor]], Shape shape:Shape, xPosition:Int, yPosition:Int)->[[UIColor]] {
+    private func margeShapeIntoFields(fields:inout [[UIColor?]], Shape shape:Shape, xPosition:Int, yPosition:Int)->[[UIColor?]]{
 
         var points:[[Bool]] = shape.getPoints();
 
@@ -168,12 +169,12 @@ class FieldStorage {
      * @param yPosition pozice pohyblivého tvaru na ose Y
      * @return
      */
-    public func printStatus(shape:Shape?, xPosition:Int, yPosition:Int)->[[UIColor]] {
-        let copyFields:[[UIColor]] = deepCopyOfFileds(fieldsToCopy: fileds)!;
+    public func printStatus(shape:Shape?, xPosition:Int, yPosition:Int)->[[UIColor?]] {
+        var copyFields:[[UIColor?]] = deepCopyOfFileds(fieldsToCopy: fileds)!;
         if (shape == nil) {
             return copyFields;
         }
-        return margeShapeIntoFields(fields: copyFields, Shape: shape, xPosition: xPosition, yPosition: yPosition);
+        return margeShapeIntoFields(fields: &copyFields, Shape: shape!, xPosition: xPosition, yPosition: yPosition);
     }
 
     /**
@@ -182,14 +183,19 @@ class FieldStorage {
      * @param fieldsToCopy kopírované dvojrozměrné pole barev
      * @return dvojrozměrná hluboká kopie předanéhp pole na vstupu
      */
-    private func deepCopyOfFileds(fieldsToCopy:[[UIColor]])->[[UIColor]]? {
+    private func deepCopyOfFileds(fieldsToCopy:[[UIColor?]])->[[UIColor?]]? {
+        return fieldsToCopy
+        /*
         if fieldsToCopy.count == 0 {
             return nil
         }
-        var result:[[UIColor]] = [UIColor](fields, count: fieldsToCopy.count)
+        
+    */
+       /* var result:[[UIColor?]] = [UIColor?](repeating: [UIColor?](repeating: nil, count: fieldsToCopy[0].count), count: fieldsToCopy.count)
         for r in 0...fieldsToCopy.count {
             result[r] = fieldsToCopy[r].copy()
         }
-        return result;
+        
+      return result;*/
     }
 }

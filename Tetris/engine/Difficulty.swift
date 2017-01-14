@@ -7,35 +7,51 @@ import Foundation
  * @author Pavel Máca <maca.pavel@gmail.com>
  */
 public enum Difficulty {
+    case EASY
+    case MEDIUM
+    case HARD
+   
+    /*
     EASY("Lehká", 1, 350),
     MEDIUM("Střední", 2, 250),
-    HARD("Těžká", 3, 200);
+    HARD("Těžká", 3, 200);*/
+    
+}
 
+class DifficultyList {
+    static let list:[Difficulty: DifficultyObj] = [
+        .EASY :DifficultyObj(description: "Lehká", scoreCoeficient: 1, fallSpeed: 350),
+        .MEDIUM :DifficultyObj(description: "Střední", scoreCoeficient: 2, fallSpeed: 250),
+        .HARD :DifficultyObj(description: "Těžká", scoreCoeficient: 3, fallSpeed: 200),
+    ]
+}
+
+class DifficultyObj {
     /**
      * Popis obtížnosti
      */
-    final String description;
+    let description:String;
 
     /**
      * Koeficient obtížnosti
      */
-    final int scoreCoeficient;
+    let scoreCoeficient:Int;
 
     /**
      * Rychlost pádu (prodleva mezi pohyby objektů) v milisekundách
      */
-    final int fallSpeed;
+    let fallSpeed:Int;
 
-    Difficulty(String description, int scoreCoeficient, int fallSpeed) {
-        this.description = description;
-        this.scoreCoeficient = scoreCoeficient;
-        this.fallSpeed = fallSpeed;
+    init(description:String, scoreCoeficient:Int, fallSpeed:Int) {
+        self.description = description;
+        self.scoreCoeficient = scoreCoeficient;
+        self.fallSpeed = fallSpeed;
     }
 
     /**
      * @return {@link #scoreCoeficient}
      */
-    public int getScoreCoeficient() {
+    public func getScoreCoeficient()->Int {
         return scoreCoeficient;
     }
 
@@ -44,15 +60,14 @@ public enum Difficulty {
      *
      * @return {@link #description}
      */
-    @Override
-    public String toString() {
+    public func toString()->String {
         return description;
     }
 
     /**
      * @return {@link #fallSpeed}
      */
-    public int getFallSpeed() {
+    public func getFallSpeed()->Int {
         return fallSpeed;
     }
 }

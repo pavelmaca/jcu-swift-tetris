@@ -1,8 +1,5 @@
-package tetris.engine.board;
-
-import java.io.Serializable;
-import java.util.Date;
-
+/*
+ 
 /**
  * Reprezentuje jeden záznam v žebříčku obsahující jméno hráče, datum hry a skóre
  * Uožnuje řazení podle skóre.
@@ -97,4 +94,4 @@ public class Record implements Serializable, Comparable<Record> {
      */
     public class InvalidScoreException extends Exception {
     }
-}
+}*/
