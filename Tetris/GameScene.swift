@@ -25,8 +25,9 @@ class GameScene: SKScene {
     
     private var engine:Engine?
     
-    
-
+ /*   init(fileNamed:String){
+        super.init(fileNamed: fileNamed)!
+    }*/
     
     override init(size: CGSize){
         super.init(size: size)
@@ -40,7 +41,7 @@ class GameScene: SKScene {
         startup()
     }
     
-    func swipedLeft(sender:UIGestureRecognizer){
+    public func swipedLeft(sender:UIGestureRecognizer){
         if sender.state == UIGestureRecognizerState.ended {
             engine?.moveLeft()
         }
@@ -49,21 +50,20 @@ class GameScene: SKScene {
 
     func startup(){
         self.backgroundColor = .black
-
-        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft))
-        swipeLeft.direction = .left
-        self.view?.addGestureRecognizer(swipeLeft)
-        
         
         let size = Int(self.size.width.divided(by: 10))
         let rows = Int(self.size.height.divided(by: CGFloat(size)))
         
         engine = Engine(rowsCount: rows , colsCount: 10)
-            
+        
         engine!.setDifficulty(difficulty: .MEDIUM)
         engine!.start()
        // let shape = SKShapeNode.init(rectOf: CGSize.init(width:20, height: 20), cornerRadius: 1)
 
+    }
+    
+    func getEngine()->Engine{
+        return engine!
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -142,7 +142,7 @@ class GameScene: SKScene {
         }
     }
     
-    
+
     func touchDown(atPoint pos : CGPoint) {
         self.shape = SKShapeNode.init(rectOf: CGSize.init(width:10, height: 10), cornerRadius: 1)
         self.addChild(self.shape!)
@@ -151,6 +151,8 @@ class GameScene: SKScene {
             n.strokeColor = SKColor.green
             self.addChild(n)
         }
+        
+        engine?.rotateShape()
     }
     
     func touchMoved(toPoint pos : CGPoint) {

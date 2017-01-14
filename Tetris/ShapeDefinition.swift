@@ -22,27 +22,23 @@ class ShapeDefinition {
             ], color: UIColor.orange)
             
         case .T: return Shape(points: [
-            [false, false, false],
             [true, true, true],
-            [false, false, false],
+            [false, true, false],
             ], color: UIColor.green)
             
         case .SQUARE: return Shape(points: [
-            [false, false, false],
-            [true, true, true],
-            [false, false, false],
+            [true, true],
+            [true, true],
             ], color: UIColor.red)
             
         case .N: return Shape(points: [
-            [false, false, false],
-            [true, true, true],
-            [false, false, false],
+            [true, true, false],
+            [false, true, true],
             ], color: UIColor.yellow)
             
         case .L: return Shape(points: [
-            [false, false, false],
             [true, true, true],
-            [false, false, false],
+            [true, false, false],
             ], color: UIColor.blue)
         }
         
