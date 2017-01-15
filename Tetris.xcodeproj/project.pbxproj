@@ -27,6 +27,7 @@
 		E96E6B451E0A8A56009F063F /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B441E0A8A56009F063F /* ShapeType.swift */; };
 		E96E6B471E0ABCE3009F063F /* ShapeDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E6B461E0ABCE3009F063F /* ShapeDefinition.swift */; };
 		E9773AF91E2B7FD90046B1C2 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9773AF81E2B7FD90046B1C2 /* StartViewController.swift */; };
+		E9E6DE601E2B99F700EDFC99 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6DE5F1E2B99F700EDFC99 /* EventType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		E96E6B441E0A8A56009F063F /* ShapeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
 		E96E6B461E0ABCE3009F063F /* ShapeDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeDefinition.swift; sourceTree = "<group>"; };
 		E9773AF81E2B7FD90046B1C2 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = ../StartViewController.swift; sourceTree = "<group>"; };
+		E9E6DE5F1E2B99F700EDFC99 /* EventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			children = (
 				E96B64A21E2A57D3001C0719 /* GameStatusAdapter.swift */,
 				E96B64A01E2A57C0001C0719 /* GameStatusListener.swift */,
+				E9E6DE5F1E2B99F700EDFC99 /* EventType.swift */,
 			);
 			name = events;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E96E6B3C1E0A84F4009F063F /* ShapeGenerator.swift in Sources */,
+				E9E6DE601E2B99F700EDFC99 /* EventType.swift in Sources */,
 				E9773AF91E2B7FD90046B1C2 /* StartViewController.swift in Sources */,
 				65828216C738D354CC53FEA4 /* AppDelegate.swift in Sources */,
 				E96E6B421E0A8539009F063F /* Gui.swift in Sources */,

@@ -20,7 +20,7 @@ class StartViewController: UIViewController {
         let mapViewControllerObj = self.storyboard?.instantiateViewController(withIdentifier: "GameView") as? GameViewController
 
         //self.performSegue(withIdentifier: "GameView", sender: self)
-        self.navigationController!.pushViewController(mapViewControllerObj, animated: true)
+        self.navigationController!.pushViewController(mapViewControllerObj!, animated: true)
     }
      override var shouldAutorotate: Bool {
         return false

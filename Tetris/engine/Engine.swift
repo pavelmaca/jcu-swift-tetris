@@ -34,8 +34,7 @@ class Engine {
     private var score:Int = 0
 
     /* Pole listenerů reagující na změnu stavu hry */
-   // private ArrayList<GameStatusListener> gameStatusListeners = new ArrayList<>();
-    private var gameStatusListeners:[GameStatusListener] = [GameStatusListener]()
+    private var gameStatusListeners:[(_:EventType)->Void] = [(evetn:EventType)->Void]()
 
     /* Generátor náhodných tvarů */
     private var generator:ShapeGenerator = ShapeGenerator()
@@ -64,9 +63,9 @@ class Engine {
         actualY = 0;
 
         nextShape = generator.createNext();
-        for listener in gameStatusListeners{
+        /*for listener in gameStatusListeners{
             listener.shapeChange()
-        }
+        }*/
     }
 
     /**
@@ -223,17 +222,18 @@ class Engine {
      *
      * @param listener Listener implemetující rozhrani {@link GameStatusListener}
      */
-    public func addGameStatusListener(listener:GameStatusListener ) {
+    public func addGameStatusListener(listener:@escaping (_:EventType)->Void ) {
         gameStatusListeners.append(listener)
     }
+    
 
     /**
      * Provedení všech akcí vazaných na změnu skóre v registrovaných listenerech
      */
     private func performScoreChangeEvent() {
-        for listener in gameStatusListeners {
+       /* for listener in gameStatusListeners {
             listener.scoreChange(score: score)
-        }
+        }*/
     }
 
     /**
@@ -241,7 +241,8 @@ class Engine {
      */
     private func performGameEndEvent() {
         for listener in gameStatusListeners {
-            listener.gameEnd()
+           // listener.gameEnd()
+            listener(EventType.GAME_OVER)
         }
     }
 

@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     
     private var engine:Engine?
 
+    @IBOutlet weak var gameOver: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +22,25 @@ class GameViewController: UIViewController {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") as! GameScene? {
                 engine = scene.getEngine()
+                
+                let listener = {(event:EventType)->Void in
+                    if event == .GAME_OVER {
+                        self.gameOver.isHidden = false
+                    }
+                }
+                
+                engine!.addGameStatusListener(listener: listener)
+                
+                /*
+                engine!.addGameStatusListener(listener: { (EventType) -> Void{
+                    if event == .GAME_OVER {
+                        let mapViewControllerObj = self.storyboard?.instantiateViewController(withIdentifier: "GameOver") as? GameViewController
+                    
+                        self.navigationController!.pushViewController(mapViewControllerObj!, animated: true)
+                    }
+                    }})*/
+                
+                scene.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
                 scene.anchorPoint = CGPoint.zero
                 
@@ -95,4 +115,9 @@ class GameViewController: UIViewController {
         return true
     }
 
+    @IBAction func handleRestartBtn(_ sender: Any) {
+        gameOver.isHidden = true
+        engine?.restart()
+        engine?.start()
+    }
 }
