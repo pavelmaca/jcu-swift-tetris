@@ -41,12 +41,6 @@ class GameScene: SKScene {
         startup()
     }
     
-    public func swipedLeft(sender:UIGestureRecognizer){
-        if sender.state == UIGestureRecognizerState.ended {
-            engine?.moveLeft()
-        }
-        
-    }
 
     func startup(){
         self.backgroundColor = .black
@@ -87,34 +81,46 @@ class GameScene: SKScene {
     
     func renderSquers(){
         let fields:[[UIColor?]] = engine!.getStatus()
-        let squereSize:Int = Int(self.size.width.divided(by: CGFloat(engine!.getColsCount())))
+        let squereSize:CGFloat = self.size.width.divided(by: CGFloat(engine!.getColsCount()))
         
 
-       // let xStart:Int = 0
-        let yStart:Int = Int(self.size.height)
+        let yStart:CGFloat = self.size.height
         
         for x in 0...engine!.getColsCount()-1{
             for y in 0...engine!.getRowsCount()-1{
                 var color = fields[y][x]
                 
                 if color == nil {
-                    //x += 1
-                    //continue
                     color = UIColor.white
+                    continue
                 }
-   
-             //   let shape = SKShapeNode.init(rect: CGRect(x: xStart-x*squereSize, y: yStart - y*squereSize,  width:squereSize, height: squereSize), cornerRadius: 1)
-                let shape = SKShapeNode.init(rect: CGRect(x: 0, y: 0, width: squereSize, height: squereSize))
-                shape.fillColor = color!
-                
-                // shape has position on bottom left corner
-                shape.position = CGPoint(x: x * squereSize, y: yStart - y * squereSize - squereSize)
+
+                let shape = drawShape(color: color!,
+                                      x: squereSize.multiplied(by: CGFloat(x)),
+                                      y: yStart.adding(squereSize.multiplied(by: CGFloat(y+1)).negated()),
+                                      size: squereSize)
                 
                 shapes?[y][x] = shape
                 self.addChild(shape)
             }
         }
 
+    }
+    
+    private func drawShape(color:UIColor, x:CGFloat, y:CGFloat, size:CGFloat)->SKShapeNode{
+        let rect = CGRect(x: x, y: y, width: size, height: size)
+        let shape = SKShapeNode.init(rect: rect)
+        
+        shape.fillColor = color
+        shape.strokeColor = .lightGray
+        shape.lineWidth = 3
+        shape.glowWidth = 1
+        
+        //shape.fillTexture = SKTexture.init(image: UIImage(named: "shapePattern")!)
+        
+        // shape has position on bottom left corner
+        //shape.position = CGPoint(x: squereSize.multiplied(by: CGFloat(x)), y: yStart - y * squereSize - squereSize)
+        return shape
     }
     
     /*
